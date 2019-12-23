@@ -75,14 +75,19 @@ IToolBar实现了返回键的返回功能，使用时不用对返回键做处理
     setTitleSelected(boolean b)
 ```
 
-在application中可以全局设置IToolBar样式
+在application中可以全局修改IToolBar的样式风格
 ```java
-	//第一种方式：只统一IToolBar背景色
+ @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //第一种方式：只统一IToolBar背景色
         IToolBar.init(R.color.Green);
-	//第二种方式：统一IToolBar背景色、标题色、返回键图标
+        //第二种方式：统一IToolBar背景色、标题色、返回键图标
         IToolBar.init(R.color.Purple,R.color.White,R.mipmap.toolbar_back_white);
-	//第三种方式：统一IToolBar背景色、标题色、右边文本颜色、返回键图标、整体高度
+        //第三种方式：统一IToolBar背景色、标题色、右边文本颜色、返回键图标、整体高度
         IToolBar.init(R.color.Blue,R.color.White,R.color.Yellow,R.mipmap.toolbar_back_white,120);
+    }
 ```
 
 
@@ -97,7 +102,7 @@ IToolBar实现了返回键的返回功能，使用时不用对返回键做处理
 
 声明
 -
-本应用用作分享与学习。
+本控件用作分享与学习。
 
 关于作者
 -
