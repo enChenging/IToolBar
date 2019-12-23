@@ -2,6 +2,8 @@ package com.release.demo;
 
 import android.app.Application;
 
+import com.release.itoolbar.IToolBar;
+
 /**
  * @author Mr.release
  * @create 2019-12-21
