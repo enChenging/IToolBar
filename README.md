@@ -32,11 +32,57 @@ allprojects {
 implementation 'com.github.enChenging:IToolBar:1.0.0'
 ```
 
-布局中
+在布局中使用
 ```xml
 <com.release.itoolbar.IToolBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+```
+IToolBar实现了返回键的返回功能，使用时不用对返回键做处理。
+
+代码中可更改的属性
+```java
+   
+    //背景色
+    setBackGroundColor(int color)
+    //布局高度
+    setHeight(int height)
+    //使返回键消失
+    setBackGone()
+    //设置返回键图标
+    setBackDrawable(Drawable drawable)
+    //设置返回键图标
+    setBackDrawable(int color)
+    //设置右边文本内容，及文本监听
+    setRight(String right, OnClickListener clickListener)
+    //设置右边文本内容，及文本监听
+    setRight(int right, OnClickListener clickListener)
+    //设置右边文本显隐
+    setRightGone(int Visible)
+    //设置右边文本颜色
+    setRightTextColor(int color)
+    //设置右边文本大小
+    setRightSize(int textSize)
+    //设置标题内容
+    setTitle(String title)
+    //设置标题内容
+    setTitle(int textId)
+    //设置标题颜色
+    setTitleColor(int color）
+    //设置标题大小
+    setTitleSize(int textSize)
+    //设置标题是否被选中
+    setTitleSelected(boolean b)
+```
+
+在application中可以全局设置IToolBar样式
+```java
+	//第一种方式：只统一IToolBar背景色
+        IToolBar.init(R.color.Green);
+	//第二种方式：统一IToolBar背景色、标题色、返回键图标
+        IToolBar.init(R.color.Purple,R.color.White,R.mipmap.toolbar_back_white);
+	//第三种方式：统一IToolBar背景色、标题色、右边文本颜色、返回键图标、整体高度
+        IToolBar.init(R.color.Blue,R.color.White,R.color.Yellow,R.mipmap.toolbar_back_white,120);
 ```
 
 
