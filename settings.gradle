@@ -1,2 +1,2 @@
-include ':app', ':IToolBar'
+include ':simple', ':IToolBar'
 rootProject.name='IToolBar'
