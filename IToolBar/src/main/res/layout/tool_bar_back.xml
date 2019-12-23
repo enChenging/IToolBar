@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolBar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/default_toolbar_height"
+    android:background="@color/White"
+    >
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/default_toolbar_height"
+        android:layout_height="@dimen/default_toolbar_height"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/toolbar_back" />
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:text="关闭"
+        android:textColor="@color/Blue"
+        android:textSize="@dimen/default_small_text_size"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_toStartOf="@+id/tv_right"
+        android:layout_toEndOf="@id/iv_back"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/tool_bar_test_view_size" />
+
+</RelativeLayout>
