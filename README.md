@@ -2,8 +2,6 @@ IToolBar
 -
 [![](https://jitpack.io/v/enChenging/IToolBar.svg)](https://jitpack.io/#enChenging/IToolBar)
 
-自定义IToolBar，是为了使实际开发过程中对ToolBar的使用更加快捷、方便。
-
 效果图如下：
 
 <div align="left" >
