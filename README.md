@@ -32,17 +32,16 @@ allprojects {
 implementation 'com.github.enChenging:IToolBar:1.0.0'
 ```
 
-在布局中使用
+在布局中使用：
 ```xml
 <com.release.itoolbar.IToolBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 ```
-IToolBar实现了返回键的返回功能，使用时不用对返回键做处理。
+IToolBar实现了返回键的返回功能，使用时不用再对返回键做处理。
 
-代码中可更改的属性
+代码中可更改的属性：
 ```java
-   
     //背景色
     setBackGroundColor(int color)
     //布局高度
@@ -75,7 +74,7 @@ IToolBar实现了返回键的返回功能，使用时不用对返回键做处理
     setTitleSelected(boolean b)
 ```
 
-在application中可以全局修改IToolBar的样式风格
+在application中可以全局修改IToolBar的样式风格，不设置则使用默认样式
 ```java
  @Override
     public void onCreate() {
