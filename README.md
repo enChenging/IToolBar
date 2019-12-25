@@ -27,7 +27,7 @@ allprojects {
  在build.gradle文件中的dependencies下添加引用：
 	
 ```java
-implementation 'com.github.enChenging:IToolBar:1.0.0'
+implementation 'com.github.enChenging:IToolBar:1.0'
 ```
 
 在布局中使用：
@@ -40,36 +40,38 @@ IToolBar实现了返回键的返回功能，使用时不用再对返回键做处
 
 代码中可更改的属性：
 ```java
-    //背景色
-    setBackGroundColor(int color)
-    //布局高度
-    setHeight(int height)
-    //使返回键消失
-    setBackGone()
-    //设置返回键图标
-    setBackDrawable(Drawable drawable)
-    //设置返回键图标
-    setBackDrawable(int color)
-    //设置右边文本内容，及文本监听
-    setRight(String right, OnClickListener clickListener)
-    //设置右边文本内容，及文本监听
-    setRight(int right, OnClickListener clickListener)
-    //设置右边文本显隐
-    setRightGone(int Visible)
-    //设置右边文本颜色
-    setRightTextColor(int color)
-    //设置右边文本大小
-    setRightSize(int textSize)
-    //设置标题内容
-    setTitle(String title)
-    //设置标题内容
-    setTitle(int textId)
-    //设置标题颜色
-    setTitleColor(int color）
-    //设置标题大小
-    setTitleSize(int textSize)
-    //设置标题是否被选中
-    setTitleSelected(boolean b)
+//标题内容
+setTitle(String title)
+//标题内容
+setTitle(int textId)
+//标题颜色
+setTitleColor(int color）
+//标题大小
+setTitleSize(int textSize)
+//标题是否被选中
+setTitleSelected(boolean b)
+//背景色
+setBackGroundColor(int color)
+//布局高度
+setHeight(int height)
+//使返回键消失
+setBackGone()
+//返回键图标
+setBackDrawable(Drawable drawable)
+//返回键图标
+setBackDrawable(int color)
+//右边文本内容
+setRight(String right)
+//右边文本内容
+setRight(int right)
+//右边文本点击监听事件
+setOnRightClickListener(OnRightClickListener clickListener)
+//右边文本显隐
+setRightGone(int Visible)
+//右边文本颜色
+setRightTextColor(int color)
+//右边文本大小
+setRightSize(int textSize)
 ```
 
 在application中可以全局修改IToolBar的样式风格，不设置则使用默认样式
