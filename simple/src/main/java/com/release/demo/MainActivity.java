@@ -29,31 +29,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        mTb1.setTitle("标题1");
-        mTb1.setBackGone();
+        mTb1.setTitle("标题1")
+                .setBackGone();
 
         mTb2.setTitle("标题2");
 
-        mTb3.setTitle("标题3");
-        mTb3.setRightText("分享");
-        mTb3.setOnRightClickListener(new IToolBar.OnRightClickListener() {
-            @Override
-            public void onClick(TextView rightText) {
-                Toast.makeText(MainActivity.this, "分享", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mTb3.setTitle("标题3")
+                .setRightText("分享")
+                .setOnRightClickListener(new IToolBar.OnRightClickListener() {
+                    @Override
+                    public void onClick(TextView rightText) {
+                        Toast.makeText(MainActivity.this, "分享", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-        mTb4.setTitle("标题4");
-        mTb4.setTitleColor(R.color.White);
-        mTb4.setRightTextColor(R.color.White);
-        mTb4.setBackGroundColor(R.color.Pink);
-        mTb4.setBackDrawable(R.mipmap.toolbar_back_white);
-        mTb4.setRightText("更多");
-        mTb4.setOnRightClickListener(new IToolBar.OnRightClickListener() {
-            @Override
-            public void onClick(TextView rightText) {
-                Toast.makeText(MainActivity.this, "更多", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mTb4.setTitle("标题4")
+                .setTitleColor(R.color.White)
+                .setRightTextColor(R.color.White)
+                .setBackGroundColor(R.color.Pink)
+                .setBackDrawable(R.mipmap.toolbar_back_white)
+                .setRightText("更多")
+                .setOnRightClickListener(new IToolBar.OnRightClickListener() {
+                    @Override
+                    public void onClick(TextView rightText) {
+                        Toast.makeText(MainActivity.this, "更多", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
