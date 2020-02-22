@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="IToolBar">
+        <attr name="title" format="string"/>
+        <attr name="titleColor" format="reference"/>
+        <attr name="titleSize" format="dimension"/>
+        <attr name="titleSelect" format="boolean"/>
+        <attr name="rightText" format="string"/>
+        <attr name="rightColor" format="reference"/>
+        <attr name="rightVisible" format="boolean"/>
+        <attr name="rightSize" format="dimension"/>
+        <attr name="background" format="reference"/>
+        <attr name="backIcon" format="reference"/>
+        <attr name="bottom_line_color" format="reference"/>
+        <attr name="bottom_line_height" format="dimension"/>
+        <attr name="bottom_line_visible" format="boolean"/>
+
+    </declare-styleable>
+</resources>

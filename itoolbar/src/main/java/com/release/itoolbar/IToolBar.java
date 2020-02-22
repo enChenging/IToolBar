@@ -2,7 +2,10 @@ package com.release.itoolbar;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,20 +14,23 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 
 /**
  * @author Mr.release
  * @create 2019/4/25
  * @Describe
  */
-public class IToolBar extends FrameLayout implements View.OnClickListener {
+public class IToolBar extends FrameLayout {
 
+    private static int mThemeBgColor, mTitleColor, mRightTitleColor, mHight, mBackDrawable;
     private ViewGroup toolBar;
-    private ImageView iv_back;
+    private ImageView iv_back_icon;
+    private View bottom_line;
     private TextView tv_title, tv_right;
-    private static int mThemeColor, mTitleColor, mRightTitleColor, mHight, mBackDrawable;
+    private String title, rightText;
+    private int background, backIcon, titleColor, rightColor, titleSize, rightSize, line_color, line_height;
+    private boolean titleSelect, rightVisible, line_visible;
+
 
     public IToolBar(Context context) {
         this(context, null);
@@ -36,21 +42,36 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
 
     public IToolBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.IToolBar);
+        title = typedArray.getString(R.styleable.IToolBar_title);
+        titleColor = typedArray.getResourceId(R.styleable.IToolBar_titleColor, R.color.Black);
+        titleSize = typedArray.getDimensionPixelSize(R.styleable.IToolBar_titleSize, getResources().getDimensionPixelSize(R.dimen.default_toolbar_title_size));
+        titleSelect = typedArray.getBoolean(R.styleable.IToolBar_titleSelect, false);
+        rightText = typedArray.getString(R.styleable.IToolBar_rightText);
+        rightColor = typedArray.getResourceId(R.styleable.IToolBar_rightColor, R.color.Blue);
+        rightSize = typedArray.getDimensionPixelSize(R.styleable.IToolBar_rightSize, getResources().getDimensionPixelSize(R.dimen.default_toolbar_title_right_size));
+        rightVisible = typedArray.getBoolean(R.styleable.IToolBar_rightVisible, false);
+        background = typedArray.getResourceId(R.styleable.IToolBar_background, R.color.Transparent);
+        backIcon = typedArray.getResourceId(R.styleable.IToolBar_backIcon, R.mipmap.toolbar_back);
+        line_color = typedArray.getResourceId(R.styleable.IToolBar_bottom_line_color, R.color.Black);
+        line_height = typedArray.getDimensionPixelSize(R.styleable.IToolBar_bottom_line_height, getResources().getDimensionPixelSize(R.dimen.default_toolbar_bottom_line));
+        line_visible = typedArray.getBoolean(R.styleable.IToolBar_bottom_line_visible, false);
         initView(context);
     }
 
-    public static void init(int themeColor) {
-        mThemeColor = themeColor;
+    public static void init(int themeBgColor) {
+        mThemeBgColor = themeBgColor;
     }
 
-    public static void init(int themeColor, int titleColor, int backDrawable) {
-        mThemeColor = themeColor;
+    public static void init(int themeBgColor, int titleColor, int backDrawable) {
+        mThemeBgColor = themeBgColor;
         mTitleColor = titleColor;
         mBackDrawable = backDrawable;
     }
 
-    public static void init(int themeColor, int titleColor, int rightTitleColor, int backDrawable, int height) {
-        mThemeColor = themeColor;
+    public static void init(int themeBgColor, int titleColor, int rightTitleColor, int backDrawable, int height) {
+        mThemeBgColor = themeBgColor;
         mTitleColor = titleColor;
         mRightTitleColor = rightTitleColor;
         mBackDrawable = backDrawable;
@@ -61,31 +82,53 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
     private void initView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.tool_bar_back, this, true);
         toolBar = view.findViewById(R.id.toolBar);
-        iv_back = view.findViewById(R.id.iv_back);
+        iv_back_icon = view.findViewById(R.id.iv_back_icon);
         tv_title = view.findViewById(R.id.tv_title);
         tv_right = view.findViewById(R.id.tv_right);
+        bottom_line = view.findViewById(R.id.bottom_line);
 
-        if (mThemeColor != 0) toolBar.setBackground(getResources().getDrawable(mThemeColor));
-        if (mTitleColor != 0) tv_title.setTextColor(getResources().getColor(mTitleColor));
-        if (mRightTitleColor != 0) tv_right.setTextColor(getResources().getColor(mRightTitleColor));
-        if (mBackDrawable != 0) iv_back.setImageDrawable(getResources().getDrawable(mBackDrawable));
 
-        if (mHight != 0) {
-            ViewGroup.LayoutParams layoutParams = toolBar.getLayoutParams();
-            layoutParams.height = mHight;
-            toolBar.setLayoutParams(layoutParams);
-        }
+        setAttributesStyled();
+        setThemeStyle();
+        setListener();
+    }
 
-        setBackFinish();
-        tv_right.setOnClickListener(this);
+    private void setAttributesStyled() {
+        setBgColor(background);
+        setBackIconDrawable(backIcon);
+        setTitleColor(titleColor);
+        setRightTextColor(rightColor);
+
+        setTitle(title);
+        setTitleSize(DensityUtil.px2sp(getContext(), titleSize));
+        setTitleSelected(titleSelect);
+        setRightText(rightText);
+        setRightSize(DensityUtil.px2sp(getContext(), rightSize));
+        setRightVisible(rightVisible ? VISIBLE : GONE);
+        setBottomLineColor(line_color);
+        setBottomLineHeight(DensityUtil.px2dip(getContext(), line_height));
+        setBottomLineVisible(line_visible ? VISIBLE : GONE);
+    }
+
+
+    /**
+     * 默认背景色透明、标题色黑色、右边文本色蓝色
+     * 建议：不要重复设置默认色值
+     */
+    private void setThemeStyle() {
+        if (mThemeBgColor != 0 && background == R.color.Transparent)
+            setBgColor(mThemeBgColor);
+        if (mBackDrawable != 0 && backIcon == R.mipmap.toolbar_back)
+            setBackIconDrawable(mBackDrawable);
+        if (mTitleColor != 0 && titleColor == R.color.Black)
+            setTitleColor(mTitleColor);
+        if (mRightTitleColor != 0 && rightColor == R.color.Blue)
+            setRightTextColor(mRightTitleColor);
+        if (mHight != 0)
+            setHeight(mHight);
     }
 
     private OnRightClickListener mOnRightClickListener;
-
-    @Override
-    public void onClick(View v) {
-        if (mOnRightClickListener != null) mOnRightClickListener.onClick(tv_right);
-    }
 
     public interface OnRightClickListener {
         public void onClick(TextView rightText);
@@ -102,11 +145,10 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
      * @param color
      * @return
      */
-    public IToolBar setBackGroundColor(int color) {
+    public IToolBar setBgColor(int color) {
         toolBar.setBackground(getResources().getDrawable(color));
         return this;
     }
-
 
     /**
      * 布局高度
@@ -122,12 +164,43 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
     }
 
     /**
-     * 使返回键消失
+     * 设置底部line的高度
+     *
+     * @param height
+     * @return
+     */
+    public IToolBar setBottomLineHeight(int height) {
+        ViewGroup.LayoutParams layoutParams = bottom_line.getLayoutParams();
+        layoutParams.height = height;
+        bottom_line.setLayoutParams(layoutParams);
+        return this;
+    }
+
+    /**
+     * 设置底部line的显隐
+     *
+     * @param visible
+     */
+    private void setBottomLineVisible(int visible) {
+        bottom_line.setVisibility(visible);
+    }
+
+    /**
+     * 设置底部line的颜色
+     *
+     * @param color
+     */
+    private void setBottomLineColor(int color) {
+        bottom_line.setBackgroundColor(getResources().getColor(color));
+    }
+
+    /**
+     * 设置返回按钮的隐藏
      *
      * @return
      */
-    public IToolBar setBackGone() {
-        iv_back.setVisibility(View.INVISIBLE);
+    public IToolBar setBackIconVisible(int visible) {
+        iv_back_icon.setVisibility(visible);
         return this;
     }
 
@@ -137,19 +210,19 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
      * @param drawable
      * @return
      */
-    public IToolBar setBackDrawable(Drawable drawable) {
-        iv_back.setImageDrawable(drawable);
+    public IToolBar setBackIconDrawable(Drawable drawable) {
+        iv_back_icon.setImageDrawable(drawable);
         return this;
     }
 
     /**
      * 设置返回键图标
      *
-     * @param color
+     * @param id
      * @return
      */
-    public IToolBar setBackDrawable(int color) {
-        iv_back.setImageDrawable(getResources().getDrawable(color));
+    public IToolBar setBackIconDrawable(@DrawableRes int id) {
+        iv_back_icon.setImageDrawable(getResources().getDrawable(id));
         return this;
     }
 
@@ -160,7 +233,7 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
      * @param right
      * @return
      */
-    public IToolBar setRightText(String right) {
+    public IToolBar setRightText(CharSequence right) {
         tv_right.setVisibility(View.VISIBLE);
         tv_right.setText(right);
         return this;
@@ -185,7 +258,7 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
      * @param Visible
      * @return
      */
-    public IToolBar setRightGone(int Visible) {
+    public IToolBar setRightVisible(int Visible) {
         tv_right.setVisibility(Visible);
         return this;
     }
@@ -213,14 +286,19 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
         return this;
     }
 
-    public IToolBar setBackFinish() {
-        iv_back.setOnClickListener(new OnClickListener() {
+    private void setListener() {
+        iv_back_icon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((Activity) getContext()).finish();
             }
         });
-        return this;
+        tv_right.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnRightClickListener != null) mOnRightClickListener.onClick(tv_right);
+            }
+        });
     }
 
 
@@ -230,7 +308,7 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
      * @param title
      * @return
      */
-    public IToolBar setTitle(String title) {
+    public IToolBar setTitle(CharSequence title) {
         tv_title.setText(title);
         return this;
     }
@@ -278,4 +356,6 @@ public class IToolBar extends FrameLayout implements View.OnClickListener {
         tv_title.setSelected(b);
         return this;
     }
+
+
 }

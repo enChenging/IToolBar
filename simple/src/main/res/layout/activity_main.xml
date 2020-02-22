@@ -3,30 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.release.itoolbar.IToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:background="@color/Amber"
+        app:title="标题"
+        app:titleColor="@color/White"
+        app:titleSize="15sp"
+        app:rightVisible="true"
+        app:rightText="帮助"
+        app:rightColor="@color/White"
+        app:rightSize="12sp"
+        app:backIcon="@mipmap/toolbar_back_white"
+        app:bottom_line_visible="true"
+        app:bottom_line_color="@color/Black"
+        app:bottom_line_height="3dp"
+        />
+
+    <com.release.itoolbar.IToolBar
         android:id="@+id/tb_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        />
 
     <com.release.itoolbar.IToolBar
         android:id="@+id/tb_2"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <com.release.itoolbar.IToolBar
         android:id="@+id/tb_3"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <com.release.itoolbar.IToolBar
         android:id="@+id/tb_4"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
 
 </LinearLayout>
