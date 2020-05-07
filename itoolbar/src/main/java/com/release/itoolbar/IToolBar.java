@@ -131,11 +131,21 @@ public class IToolBar extends FrameLayout {
     private OnRightClickListener mOnRightClickListener;
 
     public interface OnRightClickListener {
-        public void onClick(TextView rightText);
+        void onClick(TextView rightText);
     }
 
     public void setOnRightClickListener(OnRightClickListener clickListener) {
         this.mOnRightClickListener = clickListener;
+    }
+
+    private OnBackClickListener mOnBackClickListener;
+
+    public interface OnBackClickListener {
+        void onClick(ImageView iv_back_icon);
+    }
+
+    public void setOnBackhtClickListener(OnBackClickListener clickListener) {
+        this.mOnBackClickListener = clickListener;
     }
 
 
@@ -287,18 +297,17 @@ public class IToolBar extends FrameLayout {
     }
 
     private void setListener() {
-        iv_back_icon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((Activity) getContext()).finish();
-            }
-        });
-        tv_right.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnRightClickListener != null) mOnRightClickListener.onClick(tv_right);
-            }
-        });
+        iv_back_icon.setOnClickListener(v -> {
+                    if (mOnBackClickListener != null)
+                        mOnBackClickListener.onClick(iv_back_icon);
+                    else
+                        ((Activity) getContext()).finish();
+                }
+        );
+        tv_right.setOnClickListener(v -> {
+                    if (mOnRightClickListener != null) mOnRightClickListener.onClick(tv_right);
+                }
+        );
     }
 
 
