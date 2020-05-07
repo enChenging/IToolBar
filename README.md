@@ -27,7 +27,7 @@ allprojects {
  在build.gradle文件中的dependencies下添加引用：
 	
 ```java
-implementation 'com.github.enChenging:IToolBar:1.0.3'
+implementation 'com.github.enChenging:IToolBar:1.0.4'
 ```
 
 在布局中使用：
